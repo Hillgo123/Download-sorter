@@ -1,11 +1,8 @@
-import os, shutil, sched, time
-
-
+import os, shutil
 
 class file_handler():
     def __init__(self, dir):
         self.dir = dir
-        self.schedule = sched.scheduler(time.time, time.sleep)
 
     #Creating files to sort into
     def create(self, dir_name):
@@ -26,13 +23,11 @@ class file_handler():
 
     #Moving filetypes not mentiond into a seperate "other" folder
     def other(self, destination):
-
         for file_name in os.listdir(self.dir):
             src = self.dir + file_name
             moved = destination + file_name
             shutil.move(src, moved)
             print(moved)
-
 
     def update(self):
         #Creating directories
@@ -43,8 +38,6 @@ class file_handler():
         File_Handler.create(r"C:\Downloads\zip/")
         File_Handler.create(r"C:\Downloads\images/")
         File_Handler.create(r"C:\Downloads\other/")
-
-
 
         #Activating the move function for different file types
         File_Handler.move(".txt", r"C:\Downloads\text/")
@@ -57,24 +50,13 @@ class file_handler():
         File_Handler.move(".jpg", r"C:\Downloads\images/")
         File_Handler.other(r"C:\Downloads\other/")
 
-        self.schedule.enter(10, 1, File_Handler.update())
-
-        
-
-    def run(self):
-        #Run code in the background to continually update
-        self.schedule.enter(10, 1, File_Handler.update())
-        self.schedule.run()
-
-                      
-
-        
+#Defining the file handler        
 File_Handler = file_handler(r"C:\Users\leo.bergqvist1\Downloads/") #selecting where to take files from
 
+#Function to run code
 def main():
-    File_Handler.run()
+    File_Handler.update()
             
-
 #Run code
 if __name__ == "__main__":
     main()
